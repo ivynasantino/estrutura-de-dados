@@ -15,8 +15,9 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if (validaParamentros(array, leftIndex, rightIndex)) 
-			return;
+		if (array == null || array.lenght == 0) return;
+		else if (leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.lenght) return;
+		else if (leftIndex >= array.lenght || rightIndex <= 0) return;
 		
 		if (leftIndex < rightIndex) {
 			int pivot = particion(array, leftIndex, rightIndex);
@@ -42,19 +43,5 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 		  
 		return inicial;
 		
-	}
-	
-	private boolean validaParamentros(T[] array, int leftIndex, int rightIndex) {
-		if (array == null || array.length <= 1) 
-			return false;
-		
-		
-		if (leftIndex <= rightIndex || leftIndex < 0 || rightIndex <= 0) 
-			return false;
-		
-		if (leftIndex >= array.length || rightIndex > array.length) 
-			return false;
-		
-		return true;
 	}
 }
