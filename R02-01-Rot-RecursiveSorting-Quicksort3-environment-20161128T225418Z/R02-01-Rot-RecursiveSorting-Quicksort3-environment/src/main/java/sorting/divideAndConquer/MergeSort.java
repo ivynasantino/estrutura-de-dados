@@ -13,15 +13,13 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if (array == null || array.lenght == 0) return;
-		else if (leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.lenght) return;
-		else if (leftIndex >= array.lenght || rightIndex <= 0) return;
-		
-		if (leftIndex < rightIndex) {
-			int middle = leftIndex + (rightIndex - leftIndex) / 2;
-			sort(array, leftIndex, middle);
-			sort(array, middle + 1, rightIndex);
-			merge(array, leftIndex, middle, rightIndex);
+		if (verifica(array, leftIndex, rightIndex)) {
+			if (leftIndex < rightIndex) {
+				int middle = leftIndex + (rightIndex - leftIndex) / 2;
+				sort(array, leftIndex, middle);
+				sort(array, middle + 1, rightIndex);
+				merge(array, leftIndex, middle, rightIndex);
+			}
 		}
 		
 	}
@@ -64,5 +62,21 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 			mid++;
 		}
 	}
+	
+	private boolean verifica(T[] array, int leftIndex, int rightIndex) {
+		boolean result = true;
+		
+		if (array == null || array.length <= 0) {
+			result = false;
+		} else if (leftIndex >= rightIndex || leftIndex < 0) {
+			result = false;
+		} else if (rightIndex > array.length || leftIndex >= array.length
+				|| rightIndex <= 0) {
+			result = false;
+		}
+		
+		return result;
+	}
+	
 
 }

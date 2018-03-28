@@ -15,16 +15,15 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if (array == null || array.lenght == 0) return;
-		else if (leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.lenght) return;
-		else if (leftIndex >= array.lenght || rightIndex <= 0) return;
-		
-		if (leftIndex < rightIndex) {
-			int pivot = particion(array, leftIndex, rightIndex);
-			
-			sort(array, leftIndex, pivot - 1);
-			sort(array, pivot + 1, rightIndex);
+		if (verifica(array, leftIndex, rightIndex)) {
+			if (leftIndex < rightIndex) {
+				int pivot = particion(array, leftIndex, rightIndex);
+				
+				sort(array, leftIndex, pivot - 1);
+				sort(array, pivot + 1, rightIndex);
+			}
 		}
+		
 	}
 	
 	private int particion(T[] array, int leftIndex, int rightIndex) {
@@ -43,5 +42,20 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 		  
 		return inicial;
 		
+	}
+	
+	private boolean verifica(T[] array, int leftIndex, int rightIndex) {
+		boolean result = true;
+		
+		if (array == null || array.length <= 0) {
+			result = false;
+		} else if (leftIndex >= rightIndex || leftIndex < 0) {
+			result = false;
+		} else if (rightIndex > array.length || leftIndex >= array.length
+				|| rightIndex <= 0) {
+			result = false;
+		}
+		
+		return result;
 	}
 }

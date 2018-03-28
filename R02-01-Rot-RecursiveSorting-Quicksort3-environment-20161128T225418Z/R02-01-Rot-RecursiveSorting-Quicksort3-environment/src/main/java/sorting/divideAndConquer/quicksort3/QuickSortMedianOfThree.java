@@ -21,20 +21,19 @@ public class QuickSortMedianOfThree<T extends Comparable<T>> extends
   
 	public void sort(T[] array, int leftIndex, int rightIndex) {
   		
-  		if (array == null || array.lenght == 0) return;
-		else if (leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.lenght) return;
-		else if (leftIndex >= array.lenght || rightIndex <= 0) return;
-  		
-  		if (leftIndex < rightIndex) {
-  			int mid = leftIndex + (rightIndex - leftIndex) / 2;
-  			medianOfThree(array, leftIndex, mid, rightIndex);
-  			Util.swap(array, mid, rightIndex - 1);
-  			int pivot = particion(array, leftIndex + 1, rightIndex - 1);
-  			
-  			sort(array, leftIndex, pivot - 1);
-  			sort(array, pivot + 1, rightIndex);
-  			
+  		if (verifica(array, leftIndex, rightIndex)) {
+  			if (leftIndex < rightIndex) {
+  	  			int mid = leftIndex + (rightIndex - leftIndex) / 2;
+  	  			medianOfThree(array, leftIndex, mid, rightIndex);
+  	  			Util.swap(array, mid, rightIndex - 1);
+  	  			int pivot = particion(array, leftIndex + 1, rightIndex - 1);
+  	  			
+  	  			sort(array, leftIndex, pivot - 1);
+  	  			sort(array, pivot + 1, rightIndex);
+  	  			
+  	  		}
   		}
+  		
   	}
   	
   	private void medianOfThree(T[] array, int leftIndex, int mid, 
@@ -69,5 +68,20 @@ public class QuickSortMedianOfThree<T extends Comparable<T>> extends
   		return inicial; 	
   		
   	}
+  	
+  	private boolean verifica(T[] array, int leftIndex, int rightIndex) {
+		boolean result = true;
+		
+		if (array == null || array.length <= 0) {
+			result = false;
+		} else if (leftIndex >= rightIndex || leftIndex < 0) {
+			result = false;
+		} else if (rightIndex > array.length || leftIndex >= array.length
+				|| rightIndex <= 0) {
+			result = false;
+		}
+		
+		return result;
+	}
  
 }
