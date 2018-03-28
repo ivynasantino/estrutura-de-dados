@@ -15,35 +15,45 @@ public class SimultaneousRecursiveBubblesort<T extends Comparable<T>> extends
 		AbstractSorting<T> {
 	
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if (array == null || array.lenght == 0) return;
-		else if (leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.lenght) return;
-		else if (leftIndex >= array.lenght || rightIndex <= 0) return;
-		
-		int inicio = leftIndex;
-		int fim = rightIndex;
-		
-		if (inicio < rightIndex) {
-			if (array[inicio].compareTo(array[inicio+1]) > 0) {
-				Util.swap(array, inicio, inicio+1);
+		if (verifica(array, leftIndex, rightIndex)) {
+			int inicio = leftIndex;
+			int fim = rightIndex;
+			
+			if (inicio < rightIndex) {
+				if (array[inicio].compareTo(array[inicio+1]) > 0) {
+					Util.swap(array, inicio, inicio+1);
+				}
+				
+				inicio++;
+				sort(array, inicio, rightIndex);
 			}
-			else {
-				//Faz nada
+			
+			if (fim > leftIndex) {
+				if (array[fim].compareTo(array[fim-1]) < 0) {
+					Util.swap(array, fim, fim-1);
+				}
+				
+				fim--;
+				sort(array, leftIndex, fim);
 			}
-		
-			inicio++;
-			sort(array, inicio, rightIndex);
 		}
 		
-		if (fim > leftIndex) {
-			if (array[fim].compareTo(array[fim-1]) < 0) {
-				Util.swap(array, fim, fim-1);
-			}
-			else {
-				//Faz nada
-			}
-			fim--;
-			sort(array, leftIndex, fim);
+		
+		
+	}
+	
+	private boolean verifica(T[] array, int leftIndex, int rightIndex) {
+		boolean result = true;
+		
+		if (array == null || array.length <= 0) {
+			result = false;
+		} else if (leftIndex >= rightIndex || leftIndex < 0) {
+			result = false;
+		} else if (rightIndex > array.length || leftIndex >= array.length
+				|| rightIndex <= 0) {
+			result = false;
 		}
 		
+		return result;
 	}
 }
