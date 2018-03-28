@@ -22,17 +22,17 @@ public class CircularQueue<T> implements Queue<T> {
 			throw new QueueOverflowException();
 		}
 		
-		if (element == null) {
-			return;
+		if (element != null) {
+			elements++;
+			
+			if (tail == -1 && head == -1) {
+				head = (head + 1) % array.length;
+			}
+			tail = (tail + 1) % array.length;
+			array[tail] = element;
 		}
 		
-		elements++;
 		
-		if (tail == -1 && head == -1) {
-			head = (head + 1) % array.length;
-		}
-		tail = (tail + 1) % array.length;
-		array[tail] = element;
 	}
 
 	@Override
@@ -51,11 +51,12 @@ public class CircularQueue<T> implements Queue<T> {
 
 	@Override
 	public T head() {
-		if (isEmpty()) {
-			return null;
+		T result = null;
+		if (!isEmpty()) {
+			result = array[head];
 		}
 		
-		return array[head];
+		return result;
 	}
 
 	@Override
@@ -67,6 +68,5 @@ public class CircularQueue<T> implements Queue<T> {
 	public boolean isFull() {
 		return (elements == array.length);
 	}
-	
 
 }

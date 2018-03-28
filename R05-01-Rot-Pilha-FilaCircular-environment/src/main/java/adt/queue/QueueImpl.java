@@ -17,11 +17,12 @@ public class QueueImpl<T> implements Queue<T> {
 
 	@Override
 	public T head() {
-		if (isEmpty()) {
-			return null;
+		T result = null;
+		if (!isEmpty()) {
+			result = array[ZERO];
 		}
 		
-		return array[ZERO];
+		return result;
 	}
 
 	@Override
@@ -46,10 +47,9 @@ public class QueueImpl<T> implements Queue<T> {
 			throw new QueueOverflowException();
 		}
 		
-		if (element == null) {
-			return;
+		if (element != null) {
+			array[++tail] = element;
 		}
-		array[++tail] = element;
 	}
 
 	@Override

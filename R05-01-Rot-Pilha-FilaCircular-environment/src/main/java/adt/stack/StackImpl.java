@@ -15,10 +15,11 @@ public class StackImpl<T> implements Stack<T> {
 
 	@Override
 	public T top() {
-		if (isEmpty()) {
-			return null;
+		T result = null;
+		if (!isEmpty()) {
+			result = array[top];
 		}
-		return array[top];
+		return result;
 	}
 
 	@Override
@@ -37,10 +38,10 @@ public class StackImpl<T> implements Stack<T> {
 			throw new StackOverflowException();
 		}
 		
-		if (element == null) {
-			return;
+		if (element != null) {
+			array[++top] = element;
 		}
-		array[++top] = element;
+		
 	}
 
 	@Override
