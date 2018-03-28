@@ -29,13 +29,12 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 
 	private int height(BSTNode<T> node) {
-		if (node.isEmpty()) {
-			return INVALID;
+		int height = INVALID;
+		if (!node.isEmpty()) {
+			height = 1 + Math.max(height((BSTNode<T>)node.getLeft()), 
+					height((BSTNode<T>)node.getRight()));;
 			
-		} else {
-			return 1 + Math.max(height((BSTNode<T>)node.getLeft()), 
-					height((BSTNode<T>)node.getRight()));
-		}
+		} return height;
 	}
 	
 	@Override
@@ -44,26 +43,25 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 	
 	private BSTNode<T> search(T element, BSTNode<T> node) {
-		if (element == null || node == null || node.isEmpty()) {
-			return new BSTNode<T>();
-			
-		} else {
+		BSTNode<T> result = new BSTNode<T>();
+		if (element != null && node != null && !node.isEmpty()) {
 			if (element.equals(node.getData())) {
-				return node;
+				result = node;
 				
 			} else if (element.compareTo(node.getData()) < 0){
-				return search(element, (BSTNode<T>)node.getLeft());
+				result = search(element, (BSTNode<T>)node.getLeft());
 			} else {
-				return search(element, (BSTNode<T>)node.getRight());
+				result = search(element, (BSTNode<T>)node.getRight());
 			}
-		}
+			
+		}return result;
 	}
 
 	@Override
 	public void insert(T element) {
-		if (element == null) return;
-		
-		insert(element, root);
+		if (element != null) {
+			insert(element, root);
+		}
 	}
 	
 	private void insert(T element, BSTNode<T> node) {
@@ -90,17 +88,16 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 
 	private BSTNode<T> maximum(BSTNode<T> node) {
-		if (isEmpty()) {
-			return null;
-			
-		} else {
+		BSTNode<T> result = null;
+		if (!isEmpty()) {
 			if (node.getRight().isEmpty()) {
-				return node;
+				result = node;
 				
 			} else {
-				return maximum((BSTNode<T>)node.getRight());
+				result = maximum((BSTNode<T>)node.getRight());
 			}
-		}
+			
+		} return result;
 	}
 	
 	@Override
@@ -109,17 +106,16 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 
 	private BSTNode<T> minimum(BSTNode<T> node) {
-		if (isEmpty()) {
-			return null;
-			
-		} else {
+		BSTNode<T> result = null;
+		if (!isEmpty()) {
 			if (node.getLeft().isEmpty()) {
-				return node;
+				result = node;
 				
 			} else {
-				return minimum((BSTNode<T>) node.getLeft());
+				result = minimum((BSTNode<T>) node.getLeft());
 			}
-		}
+			
+		} return result;
 	}
 	@Override
 	public BSTNode<T> sucessor(T element) {
