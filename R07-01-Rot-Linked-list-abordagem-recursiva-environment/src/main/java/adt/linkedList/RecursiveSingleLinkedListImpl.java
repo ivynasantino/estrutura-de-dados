@@ -22,52 +22,54 @@ public class RecursiveSingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public int size() {
-		if (isEmpty()) {
-			return 0;
+		int size = 0;
+		if (!isEmpty()) {
+			size = 1 + this.next.size();
 		} 
-		return 1 + this.next.size();
+		return size;
 	}
 
 	@Override
 	public T search(T element) {
-		if (element == null) return null;
-		
-		if (isEmpty()) {
-			return null;
-		} else {
+		T result = null;
+		if (element != null && !isEmpty()) {
+	
 			if (this.data.equals(element)) {
-				return element;
+				result = element;
 			} else {
-				return next.search(element);
+				result = next.search(element);
 			}
 		}
+		return result;
 	}
 
 	@Override
 	public void insert(T element) {
-		if (element == null) return;
+		if (element != null) {
 		
-		if (isEmpty()) {
-			this.data = element;
-			this.next = new RecursiveDoubleLinkedListImpl<>();
-			
-		} else {
-			next.insert(element);
+			if (isEmpty()) {
+				this.data = element;
+				this.next = new RecursiveDoubleLinkedListImpl<>();
+				
+			} else {
+				next.insert(element);
+			}
 		}
 		
 	}
 
 	@Override
 	public void remove(T element) {
-		if (element == null) return;
+		if (element != null) {
 		
-		if (!isEmpty()) {
-			if (this.data.equals(element)) {
-				this.setData(this.next.data);
-				this.setNext(next.next);
-				
-			} else {
-				next.remove(element);
+			if (!isEmpty()) {
+				if (this.data.equals(element)) {
+					this.setData(this.next.data);
+					this.setNext(next.next);
+					
+				} else {
+					next.remove(element);
+				}
 			}
 		}
 	}
