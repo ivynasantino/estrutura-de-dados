@@ -28,57 +28,60 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public T search(T element) {
-		if (element == null) return null;
+		T node = null;
+		if (element != null) {
 		
-		SingleLinkedListNode<T> nodeHead = head;
-		
-		while (!nodeHead.isNIL()) {
-			if (nodeHead.getData().equals(element)) {
-				return nodeHead.getData();
-			}
+			SingleLinkedListNode<T> nodeHead = head;
 			
-			nodeHead = nodeHead.getNext();
+			while (!nodeHead.isNIL()) {
+				if (nodeHead.getData().equals(element)) {
+					node = nodeHead.getData();
+				}
+				
+				nodeHead = nodeHead.getNext();
+			}
 		}
-		
-		return null;
+		return node;
 	}
 
 	@Override
 	public void insert(T element) {
-		if (element == null) return;
+		if (element != null) {
 		
-		SingleLinkedListNode<T> nodeHead = head;
-		
-		while (!nodeHead.isNIL()) {
-			nodeHead = nodeHead.getNext();
+			SingleLinkedListNode<T> nodeHead = head;
+			
+			while (!nodeHead.isNIL()) {
+				nodeHead = nodeHead.getNext();
+			}
+			
+			nodeHead.setData(element);
+			nodeHead.setNext(new SingleLinkedListNode<T>());
 		}
-		
-		nodeHead.setData(element);
-		nodeHead.setNext(new SingleLinkedListNode<T>());
 	}
 
 	@Override
 	public void remove(T element) {
-		if (isEmpty()) return;
-		if (element == null) return;
+		if (!isEmpty() && element != null) {
 		
-		SingleLinkedListNode<T> nodeHead = head;
-		
-		if (head.getData().equals(element)) {
-			head = head.next;
 			
-		} else {
-			SingleLinkedListNode<T> previous = new SingleLinkedListNode<>();
+			SingleLinkedListNode<T> nodeHead = head;
 			
-			while (!nodeHead.isNIL()) {
-				if (nodeHead.getData().equals(element)) {
-					previous.setNext(nodeHead.getNext());
-					nodeHead.setNext(new SingleLinkedListNode<T>());
-					break;
-				}
+			if (head.getData().equals(element)) {
+				head = head.next;
 				
-				previous = nodeHead;
-				nodeHead = nodeHead.getNext();
+			} else {
+				SingleLinkedListNode<T> previous = new SingleLinkedListNode<>();
+				
+				while (!nodeHead.isNIL()) {
+					if (nodeHead.getData().equals(element)) {
+						previous.setNext(nodeHead.getNext());
+						nodeHead.setNext(new SingleLinkedListNode<T>());
+						break;
+					}
+					
+					previous = nodeHead;
+					nodeHead = nodeHead.getNext();
+				}
 			}
 		}
 	}
