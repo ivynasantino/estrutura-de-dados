@@ -14,36 +14,31 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 	
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		if (array == null || array.length <= 1)
-			return;
-		if (leftIndex >= rightIndex || rightIndex > array.length)
-			return;
-		if(leftIndex < ZERO)
-			return;
-		
-	
-		int maxValue = maxValue(array, leftIndex, rightIndex);
-		int minValue = minValue(array, leftIndex, rightIndex);
-		
-		int size = maxValue - minValue + 1;
-		
-		Integer[] values = new Integer[size];
-		
-		for (int i = 0; i < values.length; i++) {
-			values[i] = 0;
-		}
-		
-		for (int i = leftIndex; i <= rightIndex; i++) {
-			values[array[i] - minValue]++;
-		}
-		
-		int count = leftIndex;
-		for (int i = 0; i < values.length; i++) {
-			while (values[i] > 0) {
-				array[count++] = i + minValue;
-				values[i]--;
+		if (verifica(array, leftIndex, rightIndex)) {
+			int maxValue = maxValue(array, leftIndex, rightIndex);
+			int minValue = minValue(array, leftIndex, rightIndex);
+			
+			int size = maxValue - minValue + 1;
+			
+			Integer[] values = new Integer[size];
+			
+			for (int i = 0; i < values.length; i++) {
+				values[i] = 0;
+			}
+			
+			for (int i = leftIndex; i <= rightIndex; i++) {
+				values[array[i] - minValue]++;
+			}
+			
+			int count = leftIndex;
+			for (int i = 0; i < values.length; i++) {
+				while (values[i] > 0) {
+					array[count++] = i + minValue;
+					values[i]--;
+				}
 			}
 		}
+		
 	}
 
 	
@@ -69,5 +64,20 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 		}
 		
 		return minValue;
+	}
+	
+	private boolean verifica(Integer[] array, int leftIndex, int rightIndex) {
+		boolean result = true;
+		
+		if (array == null || array.length <= ZERO) {
+			result = false;
+		} else if (leftIndex >= rightIndex || leftIndex < ZERO) {
+			result = false;
+		} else if (rightIndex > array.length || leftIndex >= array.length
+				|| rightIndex <= ZERO) {
+			result = false;
+		}
+		
+		return result;
 	}
 }
